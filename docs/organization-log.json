@@ -22,5 +22,13 @@
     "category": "development",
     "score": 90,
     "reasoning": "Claude AI: This is implementation documentation detailing the development work completed on Section 2, including headers added, structure created, API calls made, and code changes. It documents what was built rather than analyzing data or planning future work."
+  },
+  {
+    "timestamp": "2025-08-09T06:14:13.134Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/git-setup-summary.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/operations/git-setup-summary.md",
+    "category": "operations",
+    "score": 90,
+    "reasoning": "Claude AI: This is operational documentation covering git repository setup, deployment to GitHub, security configurations, and operational procedures. It serves as a deployment guide and operational runbook for the repository."
   }
 ]

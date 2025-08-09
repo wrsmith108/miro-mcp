@@ -1,0 +1,79 @@
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Secrets and credentials
+*.pem
+*.key
+*.cert
+*.crt
+secrets/
+credentials/
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+out/
+*.log
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup files
+*.backup
+*.bak
+backup/
+
+# Reports and snapshots (may contain sensitive data)
+*-snapshot.json
+*-report.json
+*-audit-*.json
+difference-report-*.json
+spatial-audit-*.json
+comprehensive-audit-*.json
+placement-analysis.json
+subsection-verification-report.json
+pre-*.json
+board-snapshot.json
+swarm-cleanup-report.json
+
+# Claude-flow
+.claude/
+claude-flow/
+
+# Debug logs
+debug.log
+error.log
+
+# API keys file (if any)
+apikeys.json
+config.json
+
+# Keep example files
+!.env.example
+!config.example.jsonclaude-organizer/

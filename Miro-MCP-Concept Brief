@@ -1,0 +1,155 @@
+# Building a Miro MCP server for Claude Desktop
+
+The Model Context Protocol (MCP) enables Claude Desktop to interact with external tools like Miro whiteboards through standardized server implementations. This guide provides everything you need to build a functional Miro MCP server, from understanding the protocol fundamentals to deploying a production-ready integration.
+
+## Understanding MCP architecture and requirements
+
+MCP is Anthropic's open-source protocol that creates secure, bidirectional connections between AI assistants and external data sources. The protocol uses a client-server architecture where Claude Desktop acts as the MCP client, connecting to lightweight MCP servers that expose specific capabilities. Communication happens via JSON-RPC 2.0 over various transport mechanisms, with stdio (standard input/output) being the most common for Claude Desktop integrations.
+
+The core components of an MCP server include **tools** (executable functions the AI can invoke), **resources** (data the AI can read), **prompts** (pre-written templates), and **sampling** (mechanisms for requesting AI completions). For a Miro integration, you'll primarily implement tools for creating and manipulating board items, and resources for reading board contents.
+
+MCP servers can be built using official SDKs available in **Python** (`pip install "mcp[cli]"`), **TypeScript** (`@modelcontextprotocol/sdk`), Java, and C#. Python and TypeScript have the most mature ecosystems with extensive examples. The TypeScript SDK provides full transport support and type safety, while Python's FastMCP framework enables rapid development with minimal boilerplate.
+
+## Setting up Miro API authentication
+
+Miro requires OAuth 2.0 authentication for REST API access. The authentication flow involves directing users to Miro's authorization endpoint, obtaining user consent, exchanging the authorization code for an access token, and including this token in all API requests. You have two token options: **expiring tokens** (1-hour lifespan with 60-day refresh tokens) for enhanced security, or **non-expiring tokens** that remain valid until the user uninstalls your app.
+
+Essential API endpoints for your MCP server include board management (`GET/POST https://api.miro.com/v2/boards`), item creation (`POST /boards/{board_id}/sticky_notes`, `/shapes`, `/texts`), and bulk operations (`POST /boards/{board_id}/items/bulk`). You'll need to request appropriate scopes: `boards:read` for accessing board information and `boards:write` for creating or modifying items.
+
+When implementing authentication, store OAuth tokens securely using environment variables, implement token refresh logic for expiring tokens, and validate all inputs to prevent injection attacks. Always use HTTPS for API communications and implement proper error handling for authentication failures.
+
+## Building your MCP server implementation
+
+Several existing Miro MCP implementations provide excellent starting points. The **@evalstate/mcp-miro** TypeScript implementation offers comprehensive board manipulation features with bulk operations support. **@LuotoCompany/mcp-server-miro** uses Python's FastMCP and auto-generates tools from Miro's OpenAPI specification. These implementations demonstrate common patterns you should follow.
+
+Here's a minimal TypeScript implementation to get started:
+
+```typescript
+#!/usr/bin/env node
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { z } from "zod";
+import axios from 'axios';
+
+const server = new McpServer({
+  name: "miro-mcp-server",
+  version: "1.0.0"
+});
+
+const miroApi = axios.create({
+  baseURL: 'https://api.miro.com/v2',
+  headers: {
+    'Authorization': `Bearer ${process.env.MIRO_ACCESS_TOKEN}`,
+    'Content-Type': 'application/json'
+  }
+});
+
+server.tool(
+  'create-sticky',
+  'Create a sticky note on a Miro board',
+  {
+    boardId: z.string().describe("The ID of the board"),
+    text: z.string().describe("Text content for the sticky note"),
+    x: z.number().optional().describe("X coordinate"),
+    y: z.number().optional().describe("Y coordinate")
+  },
+  async (args) => {
+    const response = await miroApi.post(`/boards/${args.boardId}/sticky_notes`, {
+      data: {
+        content: args.text,
+        position: { x: args.x || 0, y: args.y || 0 }
+      }
+    });
+    return {
+      content: [{
+        type: "text",
+        text: `Created sticky note with ID: ${response.data.id}`
+      }]
+    };
+  }
+);
+
+const transport = new StdioServerTransport();
+server.connect(transport);
+```
+
+For Python developers, FastMCP provides a cleaner syntax:
+
+```python
+from mcp.server.fastmcp import FastMCP
+import httpx
+
+mcp = FastMCP("miro-server")
+
+@mcp.tool()
+async def create_sticky_note(
+    board_id: str,
+    text: str,
+    x: float = 0,
+    y: float = 0
+) -> str:
+    """Create a sticky note on a Miro board."""
+    # Miro API implementation
+    
+@mcp.resource("miro://boards/{board_id}")
+async def get_board_contents(board_id: str) -> str:
+    """Get contents of a Miro board."""
+    # Implementation
+
+if __name__ == "__main__":
+    mcp.run(transport='stdio')
+```
+
+## Integrating with Claude Desktop
+
+Claude Desktop discovers MCP servers through its configuration file. On macOS, edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "miro": {
+      "command": "npx",
+      "args": ["-y", "@your-org/miro-mcp-server"],
+      "env": {
+        "MIRO_ACCESS_TOKEN": "your_access_token"
+      }
+    }
+  }
+}
+```
+
+The configuration specifies how to launch your server and passes necessary environment variables like the Miro access token. Claude Desktop will automatically start the server when needed and maintain the connection throughout the session.
+
+For development, use the **MCP Inspector** (`npx @modelcontextprotocol/inspector ./dist/server.js`) to test your server implementation through a web interface. This tool allows you to invoke tools, fetch resources, and debug JSON-RPC communication without needing Claude Desktop.
+
+## Implementing essential features
+
+A production-ready Miro MCP server should implement core tools for board operations. Essential tools include `list_boards` for discovering available boards, `get_board_items` for reading existing content, creation tools for sticky notes, shapes, and text items, `update_item` for modifications, and `bulk_create_items` for efficient multi-item operations.
+
+Resources should expose board data through URIs like `miro://boards` for listing all boards, `miro://boards/{boardId}` for specific board metadata, and `miro://boards/{boardId}/items` for board contents. This allows Claude to understand the current state before making modifications.
+
+Implement robust error handling for common scenarios: invalid or expired OAuth tokens (return clear error messages and prompt for re-authentication), board access permission issues (validate user permissions before operations), API rate limiting (implement exponential backoff for 429 responses), and invalid board or item IDs (validate inputs and provide helpful error messages).
+
+## Performance optimization and best practices
+
+Cache frequently accessed board metadata to reduce API calls, implementing TTL-based invalidation to ensure data freshness. Use Miro's bulk operations API when creating multiple items simultaneously. For high-frequency operations, implement request queuing to respect rate limits while maintaining responsiveness.
+
+Security considerations are paramount. Never log sensitive information like OAuth tokens, validate all user inputs to prevent injection attacks, implement user-scoped access controls to ensure users only interact with their authorized boards, and use environment variables for all configuration values.
+
+For debugging, use stderr for logging since stdout is reserved for JSON-RPC communication in stdio transport. Implement structured logging with clear message categories to aid troubleshooting. Include correlation IDs in logs to trace request flows through your server.
+
+## Deployment and distribution options
+
+For local development and testing, use stdio transport with direct execution. This is perfect for personal use or team testing. For broader distribution, package your server as an npm module or Python package, allowing users to install via `npx` or `pip`.
+
+Production deployments can use HTTP/SSE transport for remote hosting on platforms like Vercel, Netlify, or AWS Lambda. Containerize your server with Docker for consistent deployment across environments. For enterprise use, consider implementing multi-tenancy support with user-specific OAuth token management and isolated data access.
+
+Distribution methods include publishing to npm registry for TypeScript implementations, PyPI for Python packages, GitHub releases for standalone binaries, or Docker Hub for containerized deployments. Choose based on your target audience and their technical capabilities.
+
+## Next steps for implementation success
+
+Start by forking one of the existing implementations like `@evalstate/mcp-miro` or `@LuotoCompany/mcp-server-miro` to understand the patterns and structure. Choose TypeScript for broad compatibility and type safety, or Python with FastMCP for rapid prototyping. Focus on implementing core board operations first before adding advanced features.
+
+Test incrementally using MCP Inspector and Claude Desktop throughout development. Add comprehensive error handling and security measures before any production deployment. Plan for scalability and multi-tenancy from the beginning if you intend to distribute your server publicly.
+
+The MCP ecosystem is rapidly evolving with active communities on GitHub Discussions and Discord. Over 100 example MCP servers are available for reference, providing patterns for various integration scenarios. With this foundation, you're ready to build a robust Miro integration that enhances Claude Desktop's capabilities for visual collaboration and brainstorming.

@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2025-08-09T05:40:23.904Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/board-structure-truth.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/architecture/board-structure-truth.md",
+    "category": "architecture",
+    "score": 90,
+    "reasoning": "Claude AI: This document describes the technical structure and design of a Miro board system, including hierarchical component relationships, visual organization patterns, and system architecture shown through a Mermaid diagram. It serves as a 'source of truth' for the board's structural design."
+  },
+  {
+    "timestamp": "2025-08-09T05:44:15.742Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/documentation-index.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/development/documentation-index.md",
+    "category": "development",
+    "score": 90,
+    "reasoning": "Claude AI: This is a comprehensive documentation index for a Miro MCP project that organizes and references implementation details, scripts, analysis tools, and development resources. It serves as a navigation guide for developers working with the codebase."
+  },
+  {
+    "timestamp": "2025-08-09T05:47:06.051Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/section2-completion-report.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/development/section2-completion-report.md",
+    "category": "development",
+    "score": 90,
+    "reasoning": "Claude AI: This is implementation documentation detailing the development work completed on Section 2, including headers added, structure created, API calls made, and code changes. It documents what was built rather than analyzing data or planning future work."
+  }
+]

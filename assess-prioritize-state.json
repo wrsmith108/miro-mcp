@@ -1,0 +1,39 @@
+{
+  "frameId": "3458764637790324340",
+  "framePosition": {
+    "x": 11004.871889254826,
+    "y": 5815.816115168269,
+    "origin": "center",
+    "relativeTo": "canvas_center"
+  },
+  "matrixIds": [],
+  "solutionIds": [
+    "3458764637790551732",
+    "3458764637790551734",
+    "3458764637790551737",
+    "3458764637790551741",
+    "3458764637790551748",
+    "3458764637790551755",
+    "3458764637790551763",
+    "3458764637790551772",
+    "3458764637790551783"
+  ],
+  "assumptionIds": [
+    "3458764637790551797",
+    "3458764637790551818",
+    "3458764637790551904",
+    "3458764637790551908"
+  ],
+  "metricIds": [
+    "Time to first insight: < 15 minutes",
+    "Tutorial completion: > 80%",
+    "Template usage: > 60%",
+    "Attribute mapping success: > 85%",
+    "Pattern discovery rate: > 70%",
+    "Return for session 2: > 60%",
+    "Confidence score: > 7/10",
+    "Support tickets: < 20%"
+  ],
+  "connectorIds": [],
+  "errors": []
+}

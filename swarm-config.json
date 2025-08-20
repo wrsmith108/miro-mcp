@@ -1,0 +1,282 @@
+{
+  "swarm": {
+    "name": "Product Discovery Board Implementation Swarm",
+    "objective": "Implement Teresa Torres' Continuous Discovery Habits methodology on Miro board with proper Opportunity Solution Tree structure",
+    "strategy": "development",
+    "mode": "hierarchical",
+    "max_agents": 8,
+    "parallel": true,
+    "monitor": true,
+    "output": "json",
+    "agents": [
+      {
+        "name": "Teresa_Torres",
+        "type": "methodology_expert",
+        "role": "Chief Product Discovery Strategist",
+        "responsibilities": [
+          "Ensure proper Opportunity Solution Tree structure",
+          "Validate outcome-opportunity-solution flow",
+          "Guide continuous discovery habits implementation",
+          "Review weekly ritual integration",
+          "Approve color-purpose mapping"
+        ],
+        "knowledge_base": [
+          "Continuous Discovery Habits book",
+          "Product discovery frameworks",
+          "Opportunity Solution Tree methodology",
+          "Customer interview techniques",
+          "Assumption testing methods"
+        ]
+      },
+      {
+        "name": "Miro_API",
+        "type": "technical_expert",
+        "role": "Miro API Integration Specialist",
+        "responsibilities": [
+          "Execute all Miro API operations",
+          "Handle sticky note CRUD operations",
+          "Create connector arrows between items",
+          "Manage batch operations efficiently",
+          "Handle rate limiting and errors"
+        ],
+        "technical_skills": [
+          "Miro REST API v2",
+          "Batch operations",
+          "Error handling",
+          "Rate limit management",
+          "Position calculations"
+        ],
+        "api_credentials": {
+          "access_token": "eyJtaXJvLm9yaWdpbiI6ImV1MDEifQ_J9FguRQ-s5E5GkzQB216o1RYM-o",
+          "board_id": "uXjVJS1vI0k="
+        }
+      },
+      {
+        "name": "QA_Compliance",
+        "type": "quality_assurance",
+        "role": "Quality Assurance & Compliance Officer",
+        "responsibilities": [
+          "Verify all changes comply with implementation plan",
+          "Check Teresa Torres methodology alignment",
+          "Validate color-purpose consistency",
+          "Ensure proper parent-child relationships",
+          "Force redo of non-compliant work",
+          "Maintain 80%+ fill rate target"
+        ],
+        "validation_criteria": {
+          "structure": "Opportunity Solution Tree with 4+ levels",
+          "connections": "Minimum 30 parent-child relationships",
+          "color_mapping": "Strict adherence to defined color purposes",
+          "blank_removal": "197 blank stickies processed",
+          "methodology": "Full Teresa Torres framework compliance"
+        }
+      },
+      {
+        "name": "MCP_Server",
+        "type": "infrastructure_expert",
+        "role": "MCP Server Operations Manager",
+        "responsibilities": [
+          "Manage MCP server connections",
+          "Handle server configuration",
+          "Execute MCP tools efficiently",
+          "Coordinate with Miro API agent",
+          "Monitor server performance"
+        ],
+        "capabilities": [
+          "MCP server setup",
+          "Tool execution",
+          "Server monitoring",
+          "Error recovery",
+          "Performance optimization"
+        ]
+      },
+      {
+        "name": "Content_Architect",
+        "type": "content_specialist",
+        "role": "Product Discovery Content Designer",
+        "responsibilities": [
+          "Design opportunity mappings",
+          "Create solution hierarchies",
+          "Write clear, actionable sticky content",
+          "Ensure consistent formatting",
+          "Maintain living documentation practices"
+        ],
+        "expertise": [
+          "Product opportunity mapping",
+          "Solution ideation",
+          "User story creation",
+          "Assumption identification",
+          "Test hypothesis writing"
+        ]
+      },
+      {
+        "name": "Visual_Organizer",
+        "type": "layout_specialist",
+        "role": "Visual Layout & Organization Expert",
+        "responsibilities": [
+          "Optimize spatial arrangement",
+          "Create visual hierarchy",
+          "Ensure 110px grid alignment",
+          "Manage section boundaries",
+          "Design connection flows"
+        ],
+        "skills": [
+          "Grid-based layouts",
+          "Visual hierarchy",
+          "Color theory",
+          "Information architecture",
+          "Connector routing"
+        ]
+      },
+      {
+        "name": "Data_Analyst",
+        "type": "analytics_expert",
+        "role": "Board Analytics & Metrics Specialist",
+        "responsibilities": [
+          "Track implementation metrics",
+          "Monitor fill rates",
+          "Analyze section distribution",
+          "Report progress against goals",
+          "Identify optimization opportunities"
+        ],
+        "metrics_tracked": [
+          "Sticky fill rate",
+          "Connection count",
+          "Section utilization",
+          "Color distribution",
+          "Update frequency"
+        ]
+      },
+      {
+        "name": "Orchestrator",
+        "type": "coordinator",
+        "role": "Swarm Coordination Leader",
+        "responsibilities": [
+          "Coordinate all agent activities",
+          "Resolve conflicts between agents",
+          "Prioritize task execution",
+          "Manage dependencies",
+          "Report overall progress"
+        ],
+        "authority": [
+          "Task assignment",
+          "Priority setting",
+          "Conflict resolution",
+          "Resource allocation",
+          "Timeline management"
+        ]
+      },
+      {
+        "name": "Layout_Designer",
+        "type": "layout_specialist",
+        "role": "Board Layout & Spacing Expert",
+        "responsibilities": [
+          "Calculate optimal positions for all stickies",
+          "Ensure minimum 60px padding between elements",
+          "Prevent overlapping of stickies and shapes",
+          "Optimize visual hierarchy and flow",
+          "Validate layouts before placement"
+        ],
+        "technical_skills": [
+          "Collision detection algorithms",
+          "Grid-based positioning",
+          "Tree structure layouts",
+          "Flow layout calculations",
+          "Spatial optimization"
+        ],
+        "configuration": {
+          "minimum_padding": 60,
+          "horizontal_gap": 280,
+          "vertical_gap": 280,
+          "connector_clearance": 40,
+          "grid_enabled": true,
+          "grid_cell_width": 350,
+          "grid_cell_height": 350
+        },
+        "validation_rules": {
+          "no_overlaps": "Zero tolerance for overlapping stickies",
+          "minimum_spacing": "At least 60px between any two elements",
+          "connector_paths": "Clear paths for connector arrows",
+          "visual_hierarchy": "Parent elements above children",
+          "readability": "Text must be fully visible"
+        }
+      }
+    ],
+    "execution_plan": {
+      "phases": [
+        {
+          "phase": 0,
+          "name": "Framework Setup",
+          "lead_agents": ["Layout_Designer", "Teresa_Torres", "Content_Architect"],
+          "support_agents": ["Visual_Organizer"],
+          "tasks": [
+            "Calculate positions with no overlaps",
+            "Move PRIMARY OUTCOME to top position",
+            "Reorganize opportunities as branches",
+            "Define solution groupings"
+          ]
+        },
+        {
+          "phase": 1,
+          "name": "Blank Sticky Cleanup",
+          "lead_agents": ["Miro_API", "Data_Analyst"],
+          "support_agents": ["QA_Compliance"],
+          "tasks": [
+            "Identify 197 blank stickies",
+            "Remove non-structural blanks",
+            "Preserve tree placeholders"
+          ]
+        },
+        {
+          "phase": 2,
+          "name": "Content Population",
+          "lead_agents": ["Content_Architect", "Teresa_Torres"],
+          "support_agents": ["Miro_API"],
+          "tasks": [
+            "Create opportunity stickies",
+            "Add solution ideas",
+            "Design experiments"
+          ]
+        },
+        {
+          "phase": 3,
+          "name": "Relationship Mapping",
+          "lead_agents": ["Visual_Organizer", "Miro_API"],
+          "support_agents": ["Teresa_Torres"],
+          "tasks": [
+            "Create 30+ connector arrows",
+            "Link outcomes to opportunities",
+            "Connect solutions to experiments"
+          ]
+        },
+        {
+          "phase": 4,
+          "name": "Quality Assurance",
+          "lead_agents": ["QA_Compliance", "Data_Analyst"],
+          "support_agents": ["All"],
+          "tasks": [
+            "Verify methodology compliance",
+            "Check metrics achievement",
+            "Force corrections as needed"
+          ]
+        }
+      ]
+    },
+    "communication": {
+      "channels": [
+        "swarm_coordination",
+        "technical_operations",
+        "quality_control",
+        "progress_reporting"
+      ],
+      "reporting_frequency": "real-time",
+      "conflict_resolution": "Orchestrator decides with Teresa_Torres veto on methodology"
+    },
+    "constraints": {
+      "api_rate_limit": "60 requests per minute",
+      "batch_size": 10,
+      "delay_between_operations": "200ms",
+      "max_parallel_operations": 3
+    }
+  }
+}

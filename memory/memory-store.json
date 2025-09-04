@@ -1,0 +1,70 @@
+{
+  "default": [
+    {
+      "key": "teresa_torres_methodology",
+      "value": "Opportunity Solution Tree with hierarchical flow from outcome to opportunities to solutions to experiments",
+      "namespace": "default",
+      "timestamp": 1755638318715
+    },
+    {
+      "key": "target_metrics",
+      "value": "197 blank stickies to remove, 30+ connections to create, 80% fill rate target",
+      "namespace": "default",
+      "timestamp": 1755638318909
+    },
+    {
+      "key": "color_mapping",
+      "value": "Blue=Outcomes, LightGreen=Opportunities, Yellow=Solutions, DarkBlue=Experiments",
+      "namespace": "default",
+      "timestamp": 1755638319114
+    },
+    {
+      "key": "miro_board_id",
+      "value": "uXjVJS1vI0k=",
+      "namespace": "default",
+      "timestamp": 1755639340408
+    },
+    {
+      "key": "miro_access_token",
+      "value": "eyJtaXJvLm9yaWdpbiI6ImV1MDEifQ_J9FguRQ-s5E5GkzQB216o1RYM-o",
+      "namespace": "default",
+      "timestamp": 1755639340609
+    },
+    {
+      "key": "implementation_plan",
+      "value": "/Users/williamsmith/Documents/GitHub/Miro-MCP/claude-organizer/docs/Project/miro-board-implementation-plan.md",
+      "namespace": "default",
+      "timestamp": 1755639340802
+    },
+    {
+      "key": "phase_0",
+      "value": "Move PRIMARY OUTCOME to (1400,100)",
+      "namespace": "default",
+      "timestamp": 1755639340994
+    },
+    {
+      "key": "phase_1",
+      "value": "Remove 197 blank stickies",
+      "namespace": "default",
+      "timestamp": 1755639341184
+    },
+    {
+      "key": "phase_2",
+      "value": "Create Opportunity Solution Tree",
+      "namespace": "default",
+      "timestamp": 1755639341378
+    },
+    {
+      "key": "phase_3",
+      "value": "Add 30+ connector arrows",
+      "namespace": "default",
+      "timestamp": 1755639341572
+    },
+    {
+      "key": "phase_4",
+      "value": "Verify Teresa Torres compliance",
+      "namespace": "default",
+      "timestamp": 1755639341765
+    }
+  ]
+}

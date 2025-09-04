@@ -707,6 +707,253 @@ server.tool(
   }
 );
 
+// Tool: Delete item
+server.tool(
+  'delete-item',
+  'Delete an item from a Miro board',
+  {
+    boardId: z.string().describe("The ID of the board"),
+    itemId: z.string().describe("The ID of the item to delete")
+  },
+  async (args) => {
+    try {
+      await miroApi.delete(`/boards/${args.boardId}/items/${args.itemId}`);
+      
+      return {
+        content: [{
+          type: "text",
+          text: `Successfully deleted item with ID: ${args.itemId}`
+        }]
+      };
+    } catch (error: any) {
+      return {
+        content: [{
+          type: "text",
+          text: `Error deleting item: ${error.message}`
+        }],
+        isError: true
+      };
+    }
+  }
+);
+
+// Tool: Update item
+server.tool(
+  'update-item',
+  'Update an existing item on a Miro board',
+  {
+    boardId: z.string().describe("The ID of the board"),
+    itemId: z.string().describe("The ID of the item to update"),
+    content: z.string().optional().describe("New content for the item"),
+    x: z.number().optional().describe("New X coordinate"),
+    y: z.number().optional().describe("New Y coordinate"),
+    color: z.string().optional().describe("New color for the item")
+  },
+  async (args) => {
+    try {
+      const updateData: any = {};
+      
+      if (args.content) {
+        updateData.data = { content: args.content };
+      }
+      
+      if (args.x !== undefined || args.y !== undefined) {
+        updateData.position = {};
+        if (args.x !== undefined) updateData.position.x = args.x;
+        if (args.y !== undefined) updateData.position.y = args.y;
+      }
+      
+      if (args.color) {
+        updateData.style = { fillColor: args.color };
+      }
+      
+      const response = await miroApi.patch(`/boards/${args.boardId}/items/${args.itemId}`, updateData);
+      
+      return {
+        content: [{
+          type: "text",
+          text: `Successfully updated item ${args.itemId}. Changes: ${Object.keys(updateData).join(', ')}`
+        }]
+      };
+    } catch (error: any) {
+      return {
+        content: [{
+          type: "text",
+          text: `Error updating item: ${error.message}`
+        }],
+        isError: true
+      };
+    }
+  }
+);
+
+// Tool: Create connector
+server.tool(
+  'create-connector',
+  'Create a connector (arrow) between two items on a Miro board',
+  {
+    boardId: z.string().describe("The ID of the board"),
+    startItemId: z.string().describe("The ID of the start item"),
+    endItemId: z.string().describe("The ID of the end item"),
+    style: z.enum(['arrow', 'line']).optional().describe("Connector style (default: arrow)")
+  },
+  async (args) => {
+    try {
+      const response = await miroApi.post(`/boards/${args.boardId}/connectors`, {
+        startItem: { id: args.startItemId },
+        endItem: { id: args.endItemId },
+        style: {
+          startStrokeCap: "none",
+          endStrokeCap: args.style === 'line' ? "none" : "arrow"
+        }
+      });
+      
+      return {
+        content: [{
+          type: "text",
+          text: `Created connector from ${args.startItemId} to ${args.endItemId} with ID: ${response.data.id}`
+        }]
+      };
+    } catch (error: any) {
+      return {
+        content: [{
+          type: "text",
+          text: `Error creating connector: ${error.message}`
+        }],
+        isError: true
+      };
+    }
+  }
+);
+
+// Tool: Bulk delete items
+server.tool(
+  'bulk-delete-items',
+  'Delete multiple items efficiently with rate limiting',
+  {
+    boardId: z.string().describe("The ID of the board"),
+    itemIds: z.array(z.string()).describe("Array of item IDs to delete"),
+    batchSize: z.number().optional().describe("Number of items to delete per batch (default: 10)")
+  },
+  async (args) => {
+    try {
+      const batchSize = args.batchSize || 10;
+      const results = [];
+      
+      for (let i = 0; i < args.itemIds.length; i += batchSize) {
+        const batch = args.itemIds.slice(i, i + batchSize);
+        
+        for (const itemId of batch) {
+          try {
+            await miroApi.delete(`/boards/${args.boardId}/items/${itemId}`);
+            results.push(`Deleted: ${itemId}`);
+          } catch (itemError: any) {
+            results.push(`Failed to delete ${itemId}: ${itemError.message}`);
+          }
+        }
+        
+        // Rate limiting delay between batches
+        if (i + batchSize < args.itemIds.length) {
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
+      }
+      
+      return {
+        content: [{
+          type: "text",
+          text: `Bulk delete operation completed. Results:\n${results.join('\n')}`
+        }]
+      };
+    } catch (error: any) {
+      return {
+        content: [{
+          type: "text",
+          text: `Error in bulk delete operation: ${error.message}`
+        }],
+        isError: true
+      };
+    }
+  }
+);
+
+// Tool: Create Teresa Torres Opportunity Solution Tree
+server.tool(
+  'create-opportunity-solution-tree',
+  'Create the complete Opportunity Solution Tree structure for Teresa Torres methodology',
+  {
+    boardId: z.string().describe("The ID of the board"),
+    outcomeText: z.string().describe("The primary desired outcome"),
+    opportunities: z.array(z.string()).describe("Array of opportunity statements")
+  },
+  async (args) => {
+    try {
+      const results = [];
+      
+      // Create primary outcome at top center
+      const outcomeResponse = await miroApi.post(`/boards/${args.boardId}/sticky_notes`, {
+        data: { content: args.outcomeText },
+        position: { x: 1400, y: 100 },
+        style: {
+          fillColor: '#2D9BF0', // Blue for outcomes
+          textColor: '#FFFFFF'
+        }
+      });
+      results.push(`Created outcome: ${outcomeResponse.data.id}`);
+      
+      // Create opportunities as branches
+      const opportunityIds = [];
+      for (let i = 0; i < args.opportunities.length; i++) {
+        const x = 800 + (i * 300); // Spread opportunities horizontally
+        const y = 400;
+        
+        const oppResponse = await miroApi.post(`/boards/${args.boardId}/sticky_notes`, {
+          data: { content: args.opportunities[i] },
+          position: { x, y },
+          style: {
+            fillColor: '#8FD14F', // Light green for opportunities
+            textColor: '#000000'
+          }
+        });
+        
+        opportunityIds.push(oppResponse.data.id);
+        results.push(`Created opportunity ${i + 1}: ${oppResponse.data.id}`);
+        
+        // Create connector from outcome to opportunity
+        await new Promise(resolve => setTimeout(resolve, 100)); // Small delay
+        
+        try {
+          const connectorResponse = await miroApi.post(`/boards/${args.boardId}/connectors`, {
+            startItem: { id: outcomeResponse.data.id },
+            endItem: { id: oppResponse.data.id },
+            style: {
+              startStrokeCap: "none",
+              endStrokeCap: "arrow"
+            }
+          });
+          results.push(`Created connector: ${connectorResponse.data.id}`);
+        } catch (connectorError: any) {
+          results.push(`Failed to create connector: ${connectorError.message}`);
+        }
+      }
+      
+      return {
+        content: [{
+          type: "text",
+          text: `Opportunity Solution Tree created:\n${results.join('\n')}`
+        }]
+      };
+    } catch (error: any) {
+      return {
+        content: [{
+          type: "text",
+          text: `Error creating Opportunity Solution Tree: ${error.message}`
+        }],
+        isError: true
+      };
+    }
+  }
+);
+
 // Tool: Get color system info
 server.tool(
   'get-color-system',

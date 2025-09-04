@@ -30,5 +30,63 @@
     "category": "operations",
     "score": 90,
     "reasoning": "Claude AI: This is operational documentation covering git repository setup, deployment to GitHub, security configurations, and operational procedures. It serves as a deployment guide and operational runbook for the repository."
+  },
+  {
+    "timestamp": "2025-08-19T21:27:04.496Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/spawn-miro-swarm.sh",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/scripts/activation/spawn-miro-swarm.sh",
+    "category": "scripts",
+    "subcategory": "activation",
+    "score": 90,
+    "reasoning": "Claude AI: Bash script that activates and spawns a multi-agent swarm system using claude-flow to execute Teresa Torres methodology on a Miro board. Primary function is triggering/activating the swarm with spawn commands."
+  },
+  {
+    "timestamp": "2025-08-19T21:34:20.632Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/spawn-miro-swarm.sh",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/scripts/workflows/spawn-miro-swarm.sh",
+    "category": "scripts",
+    "subcategory": "workflows",
+    "score": 90,
+    "reasoning": "Claude AI: This is a bash script that orchestrates a complex multi-phase workflow for implementing Teresa Torres' methodology on a Miro board using claude-flow's swarm coordination. It manages workflow automation with multiple agents, phases, and coordinated tasks."
+  },
+  {
+    "timestamp": "2025-08-19T21:43:09.019Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/TERESA-TORRES-IMPLEMENTATION-GUIDE.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/development/TERESA-TORRES-IMPLEMENTATION-GUIDE.md",
+    "category": "development",
+    "score": 90,
+    "reasoning": "Claude AI: This is implementation documentation that provides detailed code examples, API integration instructions, and step-by-step development guidance for building the Teresa Torres methodology system on Miro. While it contains planning elements, the primary focus is on technical implementation details, code snippets, and development workflows."
+  },
+  {
+    "timestamp": "2025-08-19T22:46:21.079Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/LAYOUT-DESIGNER-GUIDE.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/development/LAYOUT-DESIGNER-GUIDE.md",
+    "category": "development",
+    "score": 95,
+    "reasoning": "Claude AI: This is a comprehensive development guide documenting the Layout Designer module API, usage patterns, code examples, and implementation details for developers working with Miro board layouts"
+  },
+  {
+    "timestamp": "2025-08-20T01:11:14.907Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/RETROSPECTIVE.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/analysis/RETROSPECTIVE.md",
+    "category": "analysis",
+    "score": 90,
+    "reasoning": "Claude AI: This is a comprehensive retrospective analysis document that evaluates a completed project implementation, analyzing what worked well, what could be improved, key learnings, metrics/outcomes, and providing recommendations based on the analysis of the project's execution"
+  },
+  {
+    "timestamp": "2025-08-20T02:14:53.364Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/PROJECT_SUMMARY.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/planning/PROJECT_SUMMARY.md",
+    "category": "planning",
+    "score": 90,
+    "reasoning": "Claude AI: This is a comprehensive project summary document that includes project retrospective, metrics, roadmap for next steps, and strategic planning elements. It documents completed project specifications and outlines future planning phases."
+  },
+  {
+    "timestamp": "2025-08-29T21:41:27.609Z",
+    "originalPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/Galaxy-Product-Strategy.md",
+    "newPath": "/Users/williamsmith/Documents/GitHub/Miro-MCP/docs/planning/Galaxy-Product-Strategy.md",
+    "category": "planning",
+    "score": 95,
+    "reasoning": "Claude AI: This is a comprehensive product strategy document outlining vision, hypotheses to test, roadmap phases, success criteria, and go/no-go decision points for the Galaxy product - classic strategic planning and specification content"
   }
 ]
